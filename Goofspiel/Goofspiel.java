@@ -1,6 +1,6 @@
 import goofspiel.Deck;
 import goofspiel.DeckFactory;
-import goofspiel.Game;
+import goofspiel.CarryoverGame;
 
 public class Goofspiel {
 
@@ -22,7 +22,7 @@ public class Goofspiel {
 		d.playRandom();
 		System.out.println(d);
 		
-		Game game = new Game("Ryan","Justin");
+		Game game = new CarryoverGame({"Ryan","Justin"});
 		game.play();
 	}
 

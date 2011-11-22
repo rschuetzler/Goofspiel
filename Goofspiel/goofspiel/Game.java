@@ -28,7 +28,7 @@ public abstract class Game {
 		
 	}
 	
-	public abstract void playTurn();
+	protected abstract void playTurn();
 	
 	public void play(){
 		while(gameDeck.getDeckSize()>0){
