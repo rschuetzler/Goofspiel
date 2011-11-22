@@ -1,80 +1,57 @@
 package goofspiel;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
-public class Game {
-	private Deck p1deck;
-	private Deck p2deck;
+public abstract class Game {
+	private Deck[] pDecks;
 	private Deck gameDeck;
-	private Player p1;
-	private Player p2;
-	private int p1Score;
-	private int p2Score;
+	private Player[] players;
+	private int[] scores;
 	
-	public Game(String p1Name, String p2Name){
+	public Game(String[] pNames){
 		DeckFactory df = DeckFactory.getInstance();
-		this.p1deck = df.makeGoofspielDeck();
-		this.p2deck = df.makeGoofspielDeck();
+		PlayerFactory pf = PlayerFactory.getInstance();
+		
 		this.gameDeck = df.makeGoofspielDeck();
 		gameDeck.shuffle();
-		this.p1Score = 0;
-		this.p2Score = 0;
-		PlayerFactory pf = PlayerFactory.getInstance();
-		this.p1 = pf.makePlayer(p1Name);
-		this.p2 = pf.makePlayer(p2Name);
-	}
-	
-	public void playTurn(){
 		
-//		Console console = System.console();
+		pDecks = new Deck[pNames.length-1];
+		players = new Player[pNames.length-1];
+		scores = new int[pNames.length-1];
 		
-		Scanner in = new Scanner(System.in);
-		
-		Card thisTurnCard = gameDeck.playCardByIndex(0);
-		
-		System.out.println("\nThe current card is: " + thisTurnCard + "\n");
-		System.out.println(p1.getName() + ", your current deck is: " + p1deck);
-		System.out.println("What card would you like to play?");
-		
-//		String p1card = console.readLine("What card would you like to play? ");
-		int p1cardvalue = in.nextInt();
-		System.out.println("\nThe current card is: " + thisTurnCard + "\n");
-		System.out.println(p2.getName() + ", your current deck is: " + p2deck);
-		System.out.println("What card would you like to play?");
-//		String p2card = console.readLine("What card would you like to play? ");
-		int p2cardvalue = in.nextInt();
-		
-		
-//		int p1cardvalue = Integer.parseInt(p1card);
-//		int p2cardvalue = Integer.parseInt(p2card);
-		
-		p1deck.playCardByValue(p1cardvalue);
-		p2deck.playCardByValue(p2cardvalue);
-		
-		if (p1cardvalue > p2cardvalue){
-			p1Score += thisTurnCard.getValue();
-			System.out.println("P1 wins this card");
-		}else if (p2cardvalue > p1cardvalue){
-			p2Score += thisTurnCard.getValue();
-			System.out.println("P2 wins this card");
-		}else{
-			System.out.println("\nDraw! Nobody wins this card.");
+		for (int i = 0; i < pNames.length; i++){
+			this.pDecks[i] = df.makeGoofspielDeck();
+			this.players[i] = pf.makePlayer(pNames[i]);
+			this.scores[i] = 0;
 		}
 		
-		
 	}
+	
+	public abstract void playTurn();
 	
 	public void play(){
 		while(gameDeck.getDeckSize()>0){
 			playTurn();
 		}
 		System.out.println("");
-		if (p2Score > p1Score){
-			System.out.println(p2.getName() + " wins! Congratulations!");
-		}else if (p1Score > p2Score){
-			System.out.println(p1.getName() + " wins! Congratulations!");
+		System.out.println(determineWinner());
+	}
+	
+	private String determineWinner(){
+		int[] sortedScores = new int[scores.length-1];
+		System.arraycopy(scores, 0, sortedScores, 0, scores.length-1);
+		Arrays.sort(sortedScores);
+		
+		// Determine the top score, and whether there is a single winner or a tie.
+		int topScore = sortedScores[sortedScores.length-1];
+		int index = Arrays.asList(scores).indexOf(topScore);
+		int lastIndex = Arrays.asList(scores).lastIndexOf(topScore);
+		if (index == lastIndex){
+			return players[index].getName() + " wins!";
 		}else{
-			System.out.println("It's a miracle! We have a draw.");
+			return players[index].getName() + " and " + players[lastIndex].getName() + " tied for victory!";
 		}
+		
 	}
 }
