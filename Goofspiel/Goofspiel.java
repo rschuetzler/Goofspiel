@@ -1,6 +1,7 @@
 import goofspiel.Deck;
 import goofspiel.DeckFactory;
 import goofspiel.CarryoverGame;
+import goofspiel.Game;
 
 public class Goofspiel {
 

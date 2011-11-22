@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 
 public abstract class Game {
-	private Deck[] pDecks;
-	private Deck gameDeck;
-	private Player[] players;
-	private int[] scores;
+	protected Deck[] pDecks;
+	protected Deck gameDeck;
+	protected Player[] players;
+	protected int[] scores;
 	
 	public Game(String[] pNames){
 		DeckFactory df = DeckFactory.getInstance();
