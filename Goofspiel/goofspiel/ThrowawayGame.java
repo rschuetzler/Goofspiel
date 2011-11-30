@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class CarryoverGame extends Game{
-	private int carryoverValue;
+public class ThrowawayGame extends Game{
 	
-	public CarryoverGame(String[] pNames){
+	public ThrowawayGame(String[] pNames){
 		super(pNames);
-		this.carryoverValue = 0;
 	}
 	
 	protected void playTurn(){
@@ -17,7 +15,7 @@ public class CarryoverGame extends Game{
 		
 		Card thisTurnCard = gameDeck.playCardByIndex(0);
 		
-		int[] plays = new int[players.length-1];
+		int[] plays = new int[players.length];
 		
 		for (int i = 0; i < players.length; i++){
 			Player player = players[i];
@@ -30,7 +28,8 @@ public class CarryoverGame extends Game{
 			
 		}
 		
-		// Find the winner/winners
+		// Determine if there is only one winner, or if there is a tie. If tied,
+		// nobody gets the points.
 		int[] sortedPlays = new int[plays.length]; 
 		System.arraycopy(plays, 0, sortedPlays, 0, plays.length);
 		Arrays.sort(sortedPlays);
@@ -42,27 +41,12 @@ public class CarryoverGame extends Game{
 		}
 		int index = playList.indexOf(String.valueOf(topPlay));
 		int lastIndex = playList.lastIndexOf(topPlay);
-		if (index == lastIndex) // 	If 1 winner, add carryover and current card to winner's score
-		{
-			scores[index] += carryoverValue + thisTurnCard.getValue();
-			carryoverValue = 0;
-		}else{ // If there is a tie, carry over the value into the next round
-			carryoverValue += thisTurnCard.getValue();
+		if (index == lastIndex){
+			scores[index]++;
+		}else{
+			// Do nothing if there is a tie.
 		}
-		
-		
-		
-		
-//		
-//		if (p1cardvalue > p2cardvalue){
-//			p1Score += thisTurnCard.getValue();
-//			System.out.println("P1 wins this card");
-//		}else if (p2cardvalue > p1cardvalue){
-//			p2Score += thisTurnCard.getValue();
-//			System.out.println("P2 wins this card");
-//		}else{
-//			System.out.println("\nDraw! Nobody wins this card.");
-//		}
+	
 	}
 
 }
