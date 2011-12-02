@@ -39,10 +39,16 @@ public abstract class Game {
 		}
 		System.out.println("");
 		System.out.println(determineWinner());
+		
+		System.out.println("Final Scores:");
+		for (int i = 0; i < players.length; i++)
+		{
+			System.out.println(players[i].getName() + ": " + scores[i]);
+		}
 	}
 	
 	private String determineWinner(){
-		int[] sortedScores = new int[scores.length-1];
+		int[] sortedScores = new int[scores.length];
 		System.arraycopy(scores, 0, sortedScores, 0, scores.length);
 		Arrays.sort(sortedScores);
 		
@@ -53,13 +59,14 @@ public abstract class Game {
 		{
 			scoreList.add(score);
 		}
-		int index = Arrays.asList(scores).indexOf(topScore);
-		int lastIndex = Arrays.asList(scores).lastIndexOf(topScore);
+		int index = scoreList.indexOf(topScore);
+		int lastIndex = scoreList.lastIndexOf(topScore);
 		if (index == lastIndex){
 			return players[index].getName() + " wins!";
 		}else{
 			return players[index].getName() + " and " + players[lastIndex].getName() + " tied for victory!";
 		}
+		
 		
 	}
 }

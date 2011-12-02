@@ -17,7 +17,7 @@ public class CarryoverGame extends Game{
 		
 		Card thisTurnCard = gameDeck.playCardByIndex(0);
 		
-		int[] plays = new int[players.length-1];
+		int[] plays = new int[players.length];
 		
 		for (int i = 0; i < players.length; i++){
 			Player player = players[i];
@@ -40,7 +40,7 @@ public class CarryoverGame extends Game{
 		{
 			playList.add(play);
 		}
-		int index = playList.indexOf(String.valueOf(topPlay));
+		int index = playList.indexOf(topPlay);
 		int lastIndex = playList.lastIndexOf(topPlay);
 		if (index == lastIndex) // 	If 1 winner, add carryover and current card to winner's score
 		{

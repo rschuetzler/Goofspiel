@@ -26,7 +26,7 @@ public class Goofspiel {
 		
 		GameFactory gf = GameFactory.getInstance();
 		String[] pNames = {"Ryan","Justin"};
-		Game game = gf.createGame("throwaway", pNames);
+		Game game = gf.createGame("carryover", pNames);
 		game.play();
 //		System.out.println(pNames.length);
 	}

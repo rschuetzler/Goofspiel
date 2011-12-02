@@ -39,10 +39,10 @@ public class ThrowawayGame extends Game{
 		{
 			playList.add(play);
 		}
-		int index = playList.indexOf(String.valueOf(topPlay));
+		int index = playList.indexOf(topPlay);
 		int lastIndex = playList.lastIndexOf(topPlay);
 		if (index == lastIndex){
-			scores[index]++;
+			scores[index] += thisTurnCard.getValue();
 		}else{
 			// Do nothing if there is a tie.
 		}
